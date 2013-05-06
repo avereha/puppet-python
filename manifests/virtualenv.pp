@@ -88,14 +88,6 @@ define python::virtualenv (
       path    => [ '/bin', '/usr/bin', '/usr/sbin' ],
     }
 
-    file{$venv_dir:
-      ensure  => directory,
-      owner   => $owner,
-      group   => $group,
-      recurse => true,
-      require => Exec["python_virtualenv_${venv_dir}"],
-    }
-
     if $requirements {
       exec { "python_requirements_initial_install_${requirements}_${venv_dir}":
         command     => "${venv_dir}/bin/pip install ${proxy_flag} --requirement ${requirements}",
